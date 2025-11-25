@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FYBERBOX PRO</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(139, 0, 0, 0.05) 100%);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff0000, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            border: none;
+            padding: 18px 24px;
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .active {
+            display: block;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hello-content {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hello-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .hello-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hello-subtitle {
+            color: #888;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <div id="mainPage" class="active">
+            <div class="header">
+                <div class="logo">FYBERBOX PRO</div>
+                <div class="subtitle">
+                    <span class="status-indicator"></span>
+                    Система активна
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #ff6b6b;">🎨 Визуальные настройки</h3>
+                <button class="btn" onclick="makeRed()">
+                    🔴 АКТИВИРОВАТЬ КРАСНЫЙ РЕЖИМ
+                </button>
+                <button class="btn btn-secondary" onclick="showHello()">
+                    👋 ОТКРЫТЬ ПРИВЕТСТВИЕ
+                </button>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: #ff6b6b;">⚡ Быстрый доступ</h3>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">Статистика</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚙️</div>
+                        <div class="feature-text">Настройки</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👤</div>
+                        <div class="feature-text">Профиль</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔔</div>
+                        <div class="feature-text">Уведомления</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА HELLO -->
+        <div id="helloPage" class="page">
+            <div class="header">
+                <div class="logo">ДОБРО ПОЖАЛОВАТЬ</div>
+                <div class="subtitle">Премиум интерфейс</div>
+            </div>
+
+            <div class="card">
+                <div class="hello-content">
+                    <div class="hello-icon">👋</div>
+                    <div class="hello-title">Hello, братан!</div>
+                    <div class="hello-subtitle">
+                        Это тестовое приложение с премиум дизайном.<br>
+                        Всё работает на высшем уровне!
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="goBack()">
+                    ← ВЕРНУТЬСЯ НАЗАД
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация Telegram Web App
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        
+        // Премиум красный режим
+        function makeRed() {
+            document.body.style.background = 'linear-gradient(135deg, #8B0000 0%, #FF0000 50%, #8B0000 100%)';
+            document.querySelector('.logo').style.background = 'linear-gradient(45deg, #fff, #ffd700)';
+            document.querySelector('.logo').style.webkitBackgroundClip = 'text';
+            document.querySelector('.logo').style.webkitTextFillColor = 'transparent';
+        }
+        
+        // Показать страницу Hello
+        function showHello() {
+            document.getElementById('mainPage').classList.remove('active');
+            document.getElementById('helloPage').classList.add('active');
+        }
+        
+        // Назад
+        function goBack() {
+            document.getElementById('helloPage').classList.remove('active');
+            document.getElementById('mainPage').classList.add('active');
+            // Возвращаем исходный стиль
+            document.body.style.background = 'linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%)';
+            document.querySelector('.logo').style.background = 'linear-gradient(45deg, #ff0000, #ff6b6b)';
+            document.querySelector('.logo').style.webkitBackgroundClip = 'text';
+            document.querySelector('.logo').style.webkitTextFillColor = 'transparent';
+        }
+    </script>
+</body>
+</html>
